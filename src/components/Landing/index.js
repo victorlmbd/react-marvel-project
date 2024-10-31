@@ -32,10 +32,10 @@ const Landing = () => {
   const displayBtn = btn && (
     <Fragment>
       <div className="leftBox">
-        <Link to="/Signup" onMouseOver={() => setImg("leftImg")} onMouseOut={clearImg} className="btn-welcome">Inscription</Link>
+        <Link to="/signup" onMouseOver={() => setImg("leftImg")} onMouseOut={clearImg} className="btn-welcome">Inscription</Link>
       </div>
       <div className="rightBox">
-        <Link to="/Login" onMouseOver={() => setImg("rightImg")} onMouseOut={clearImg} className="btn-welcome">Connexion</Link>
+        <Link to="/login" onMouseOver={() => setImg("rightImg")} onMouseOut={clearImg} className="btn-welcome">Connexion</Link>
       </div>
     </Fragment>
   )
