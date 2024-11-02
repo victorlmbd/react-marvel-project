@@ -1,5 +1,6 @@
-import { auth } from "../Firebase/firebaseConfig"
+import { auth, user } from "../Firebase/firebaseConfig"
 import { createUserWithEmailAndPassword } from "firebase/auth"
+import { setDoc } from "firebase/firestore";
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom";
 
@@ -33,7 +34,13 @@ const Signup = () => {
     e.preventDefault();
     const {email, password} = loginData;
     createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
+    .then ((authUser) => {
+      return setDoc(user(authUser.user.uid), {
+        pseudo,
+        email
+      })
+    })
+    .then(() => {
       setLoginData({...data});
       navigate('/Welcome')
     })
