@@ -9,7 +9,6 @@ const ProgressBar = ({idQuestion, maxQuestions}) => {
   const currentQuestionNumber = idQuestion + 1;
 
   const progressPercentage = calculateProgressPercentage(maxQuestions, currentQuestionNumber);
-  console.log(progressPercentage);
   return (
     <>
       <div className='percentage'>
