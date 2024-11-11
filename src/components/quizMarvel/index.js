@@ -1,7 +1,7 @@
 export const QuizMarvel = [
     {
         quizz: {
-            debutant: [
+            "Débutant": [
                 {
                     id: 0,
                     question: "De quelle équipe fait partie Iceman?",
@@ -123,7 +123,7 @@ export const QuizMarvel = [
                     heroId: 1009662
                 }
             ],
-            "confirme": [
+            "Confirmé": [
                 {
                     id: 0,
                     question: "Qui est Logan dans la bande dessinée de Marvel Comics 'X-Men' ?",
@@ -245,7 +245,7 @@ export const QuizMarvel = [
                     heroId: 1009281
                 }
             ],
-            "expert": [
+            "Expert": [
                 {
                     id: 0,
                     question: "Quand elle a travaillé pour Hydra, la première mission de Spider-Woman était de...",
