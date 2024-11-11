@@ -9,22 +9,28 @@ import 'react-toastify/dist/ReactToastify.css';
 
 class Quiz extends Component {
 
-  state = {
-    levelNames: ["debutant", "confirme", "expert"],
-    quizLevel: 0,
-    maxQuestions: 10,
-    storedQuestions: [],
-    question: null,
-    options: [],
-    idQuestion: 0,
-    btnDisabled: true,
-    userAnswer: null,
-    score: 0,
-    showWelcomeMsg: false,
-    quizEnd: false,
-  }
+  constructor(props) {
+    super(props)
 
-  storedDataRef = React.createRef();
+    this.initialState = {
+      levelNames: ["debutant", "confirme", "expert"],
+      quizLevel: 0,
+      maxQuestions: 10,
+      storedQuestions: [],
+      question: null,
+      options: [],
+      idQuestion: 0,
+      btnDisabled: true,
+      userAnswer: null,
+      score: 0,
+      showWelcomeMsg: false,
+      quizEnd: false,
+    }
+    this.state = this.initialState;
+
+    this.storedDataRef = React.createRef();
+
+  }
 
 
   componentDidMount() {
@@ -46,8 +52,12 @@ class Quiz extends Component {
         btnDisabled: true,
       })
     }
-    if (this.props.userData.pseudo) {
-      this.showWelcomeMsg(this.props.userData.pseudo)
+    if (this.state.quizEnd !== prevState.quizEnd) {
+      const  gradePercent = this.getPourcentage(this.state.maxQuestions, this.state.score);
+      this.gameOver(gradePercent);
+    }
+    if (this.props.userData.pseudo !== prevProps.userData.pseudo) {
+      this.showToastMsg(this.props.userData.pseudo)
     }
   }
 
@@ -65,7 +75,7 @@ class Quiz extends Component {
     }
   }
 
-  showWelcomeMsg = pseudo => {
+  showToastMsg = pseudo => {
     if (!this.state.showWelcomeMsg) {
 
       this.setState({
@@ -98,7 +108,9 @@ class Quiz extends Component {
 
   nextQuestion = () => {
     if (this.state.idQuestion === this.state.maxQuestions - 1) {
-      this.gameOver();
+      this.setState({
+        quizEnd: true,
+      })
       //end
     } else {
       this.setState(prevState => ({
@@ -139,25 +151,30 @@ class Quiz extends Component {
     }
   }
 
-  getPourcentage = (maxQuest, ourScore) => (ourScore / maxQuest)*100;
+  getPourcentage = (maxQuest, ourScore) => (ourScore / maxQuest) * 100;
 
-  gameOver = () => {
+  gameOver = percent => {
 
-    const  gradePercent = this.getPourcentage(this.state.maxQuestions, this.state.score);
+    console.log(this.state.score);
 
-    if (gradePercent >= 50) {
+
+    if (percent >= 50) {
       this.setState({
         quizLevel: this.state.quizLevel +1,
-        percent: gradePercent,
-        quizEnd: true
+        percent
       })
     } else {
-      this.setState({
-        percent: gradePercent,
-        quizEnd: true
-      })
+      this.setState({percent})
     }
 
+  }
+
+  loadLevelQuestions = (param) => {
+    this.setState({
+      ...this.initialState,
+      quizLevel: param
+    })
+    this.loadQuestions(this.state.levelNames[param]);
   }
 
 
@@ -171,7 +188,7 @@ class Quiz extends Component {
         <p key={index}
            className={`answerOptions ${this.state.userAnswer === option ? "selected" : null}`}
            onClick={() => this.submitAnswer(option)}
-        >
+           >
            {option}
         </p>
 
@@ -186,26 +203,34 @@ class Quiz extends Component {
         maxQuestions={this.state.maxQuestions}
         quizLevel={this.state.quizLevel}
         percent={this.state.percent}
+        loadLevelQuestions={this.loadLevelQuestions}
       />
     )
     :
     (
       <>
-        <Levels />
+        <Levels
+          quizLevel={this.state.quizLevel}
+          levelNames={this.state.levelNames}
+        />
         <ProgressBar
           idQuestion={this.state.idQuestion}
           maxQuestions={this.state.maxQuestions}
         />
         <h2>{this.state.question}</h2>
+
         {displayOptions}
+
         <button
           disabled={this.state.btnDisabled}
           className='btnSubmit'
           onClick={this.nextQuestion}
-        >
+          >
           {buttonLabel}
         </button>
+
         <ToastContainer />
+
       </>
     )
 

@@ -1,9 +1,12 @@
 import React from 'react'
 
-const Levels = () => {
+const Levels = ({quizLevel, levelNames}) => {
+
+  const currentLevel = levelNames[quizLevel]
+
   return (
     <div className="levelsContainer">
-      <h2 className='headingLevels'>Débutant</h2>
+      <h2 className='headingLevels'>{currentLevel}</h2>
     </div>
   )
 }
