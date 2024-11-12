@@ -1,7 +1,7 @@
 export const QuizMarvel = [
     {
         quizz: {
-            "Débutant": [
+            "Debutant": [
                 {
                     id: 0,
                     question: "De quelle équipe fait partie Iceman?",
@@ -123,7 +123,7 @@ export const QuizMarvel = [
                     heroId: 1009662
                 }
             ],
-            "Confirmé": [
+            "Confirme": [
                 {
                     id: 0,
                     question: "Qui est Logan dans la bande dessinée de Marvel Comics 'X-Men' ?",

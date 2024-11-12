@@ -13,7 +13,7 @@ class Quiz extends Component {
     super(props)
 
     this.initialState = {
-      levelNames: ["Débutant", "Confirmé", "Expert"],
+      levelNames: ["Debutant", "Confirme", "Expert"],
       quizLevel: 0,
       maxQuestions: 10,
       storedQuestions: [],
