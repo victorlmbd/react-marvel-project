@@ -1,8 +1,9 @@
-import { auth, user } from "../Firebase/firebaseConfig"
+import { useState } from "react"
 import { createUserWithEmailAndPassword } from "firebase/auth"
 import { setDoc } from "firebase/firestore";
-import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom";
+
+import { auth, user } from "../Firebase/firebaseConfig"
 
 const Signup = () => {
 

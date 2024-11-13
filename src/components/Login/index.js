@@ -1,46 +1,40 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { auth } from "../Firebase/firebaseConfig"
 import { signInWithEmailAndPassword } from "firebase/auth"
+
+import { auth } from "../Firebase/firebaseConfig"
 
 
 const Login = () => {
-
   const [email, setEmail] = useState('');
-
   const [password, setPassword] = useState('');
-
   const [btn, setBtn] = useState(false);
-
   const [error, setError] = useState('');
-
   const navigate = useNavigate();
 
   useEffect(() => {
     if(email !== '' && password.length > 5){
-      setBtn(true)
+      setBtn(true);
     } else if (btn)
-      setBtn(false)
-  }, [email, password, btn])
+      setBtn(false);
+  }, [email, password, btn]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     signInWithEmailAndPassword(auth, email, password)
-  .then((userCredential) => {
-    setEmail('');
-    setPassword('');
-    navigate('/welcome', {replace: true});
-  })
-  .catch((error) => {
-    setError(error.message);
-    setEmail('');
-    setPassword('');
-  });
-  }
+      .then(() => {
+        setEmail('');
+        setPassword('');
+        navigate('/welcome', {replace: true});
+      })
+      .catch((error) => {
+        setError(error.message);
+        setEmail('');
+        setPassword('');
+      });
+  };
 
   const errorMsg = error !== '' && <span>{error}</span>;
-
-
 
   return (
     <div className="signUpLoginBox">
@@ -49,17 +43,31 @@ const Login = () => {
         </div>
         <div className="formBoxRight">
           <div className="formContent">
-
             <h2>Connexion</h2>
             <form onSubmit={handleSubmit}>
               {errorMsg}
+
               <div className="inputBox">
-                <input onChange={e => setEmail(e.target.value)} value={email} type="email" id="email" autoComplete="off" required />
+                <input
+                  onChange={e => setEmail(e.target.value)}
+                  value={email}
+                  type="email"
+                  id="email"
+                  autoComplete="off"
+                  required
+                />
                 <label htmlFor="emal">Email</label>
               </div>
 
               <div className="inputBox">
-                <input onChange={e => setPassword(e.target.value)} value={password} type="password" id="password" autoComplete="off" required />
+                <input
+                  onChange={e => setPassword(e.target.value)}
+                  value={password}
+                  type="password"
+                  id="password"
+                  autoComplete="off"
+                  required
+                />
                 <label htmlFor="password">Mot de passe</label>
               </div>
 
@@ -67,15 +75,19 @@ const Login = () => {
             </form>
 
             <div className="linkContainer">
-              <Link className="simpleLink" to='/signup' >Nouveau sur Marvel Quiz ? Inscrivez-vous maintenant </Link>
+              <Link className="simpleLink" to='/signup'>
+                Nouveau sur Marvel Quiz ? Inscrivez-vous maintenant
+              </Link>
               <br />
-              <Link className="simpleLink" to='/forgetpassword'>Mot de passe oublié ? récupérez-le ici</Link>
+              <Link className="simpleLink" to='/forgetpassword'>
+                Mot de passe oublié ? récupérez-le ici
+              </Link>
             </div>
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default Login;

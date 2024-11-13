@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
-import { auth, user } from "../Firebase/firebaseConfig";
 import { onAuthStateChanged } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
 import { getDoc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
+
+import { auth, user } from "../Firebase/firebaseConfig";
+import Loader from "../Loader";
 import Logout from "../Logout";
 import Quiz from "../Quiz";
+
 
 const Welcome = () => {
   const navigate = useNavigate();
@@ -47,10 +50,10 @@ const Welcome = () => {
 
   if (isLoading) {
     return (
-      <>
-        <div className="loader"></div>
-        <p className="loaderText">Loading...</p>
-      </>
+      <Loader
+        loadingMsg={"Authentification ..."}
+        styling={{textAlign: 'center', color: '#FFFFFF'}}
+     />
     );
   }
 
