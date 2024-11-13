@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-
-import { auth } from '../Firebase/firebaseConfig';
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+
+import { auth } from '../Firebase/firebaseConfig';
 
 const Logout = ({ onLogout }) => {
   const [checked, setChecked] = useState(false);
@@ -12,7 +12,6 @@ const Logout = ({ onLogout }) => {
     let timeoutId;
 
     if (checked) {
-
       onLogout();
 
       signOut(auth)
@@ -32,6 +31,7 @@ const Logout = ({ onLogout }) => {
       }
     };
   }, [checked, navigate, onLogout]);
+
 
   const handleChange = e => {
     setChecked(e.target.checked);

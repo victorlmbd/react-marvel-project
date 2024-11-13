@@ -1,10 +1,10 @@
 import React, { forwardRef, useState, useEffect } from 'react'
-
 import { GiTrophyCup } from "react-icons/gi";
+
+import Loader from '../Loader';
 
 
 const QuizOver = forwardRef((props, ref) => {
-
   const {
     levelNames,
     score,
@@ -19,13 +19,16 @@ const QuizOver = forwardRef((props, ref) => {
   useEffect(() => {
     setAskedQuestion(ref.current)
       // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, []);
+
 
   const averageGrade = maxQuestions / 2;
+
 
   if (score < averageGrade) {
     setTimeout(() => loadLevelQuestions(0), 5000);
   }
+
 
   const decision = score >= averageGrade ? (
     <>
@@ -37,13 +40,11 @@ const QuizOver = forwardRef((props, ref) => {
               <button
                 className='btnResult success'
                 onClick={() => loadLevelQuestions(quizLevel)}
-                >
+              >
                 Niveau Suivant
               </button>
             </>
-          )
-          :
-          (
+          ) : (
             <>
               <p className='successMsg'>
               <GiTrophyCup size='60px' /> Bravo, vous êtes un expert !
@@ -51,7 +52,7 @@ const QuizOver = forwardRef((props, ref) => {
               <button
                 className='btnResult gameOver'
                 onClick={() =>loadLevelQuestions(0)}
-                >
+              >
                 Accueil
               </button>
             </>
@@ -63,9 +64,7 @@ const QuizOver = forwardRef((props, ref) => {
           <div className='progressPercent'>Note: {score}/{maxQuestions}</div>
       </div>
     </>
-  )
-  :
-  (
+  ) : (
     <>
       <div className='stepsBtnContainer'>
           <p className='failureMsg'>Vous avez échoué !</p>
@@ -76,7 +75,9 @@ const QuizOver = forwardRef((props, ref) => {
           <div className='progressPercent'>Note: {score}/{maxQuestions}</div>
       </div>
     </>
-  )
+  );
+
+
   const questionAnswer = score >= averageGrade ? (
     askedQuestion.map((question) => {
       return (
@@ -87,25 +88,22 @@ const QuizOver = forwardRef((props, ref) => {
             <button className='btnInfo'>Infos</button>
           </td>
         </tr>
-      )
+      );
     })
-  )
-  :
-  (
+  ) : (
     <tr>
       <td colSpan="3">
-        <div className='loader'></div>
-        <p style={{textAlign: 'center', color: 'red'}}>
-          Pas de réponses !
-        </p>
+       <Loader
+        styling={{textAlign: 'center', color: 'red'}}
+        loadingMsg={"Pas de réponses !"}
+       />
       </td>
     </tr>
-  )
+  );
 
 
   return (
     <>
-
      {decision}
 
       <hr />
@@ -126,7 +124,7 @@ const QuizOver = forwardRef((props, ref) => {
         </table>
       </div>
     </>
-  )
-})
+  );
+});
 
 export default React.memo(QuizOver);
