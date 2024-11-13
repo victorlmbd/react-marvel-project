@@ -1,4 +1,5 @@
-import { useRef, useEffect, useState, Fragment } from "react"
+import { Fragment, useEffect, useState, useRef } from "react"
+
 import { Link } from "react-router-dom";
 
 const Landing = () => {

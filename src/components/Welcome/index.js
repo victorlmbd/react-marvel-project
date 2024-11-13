@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
+
 import { auth, user } from "../Firebase/firebaseConfig";
 import { onAuthStateChanged } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
 import { getDoc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
+
 import Logout from "../Logout";
 import Quiz from "../Quiz";
 

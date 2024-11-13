@@ -1,11 +1,13 @@
+import { Bounce, Flip, toast,ToastContainer , Zoom } from 'react-toastify';
+import { FaChevronRight } from "react-icons/fa6";
 import React, { Component } from 'react';
+
 import Levels from '../Levels';
 import ProgressBar from '../ProgressBar';
+import QuizMarvel from '../quizMarvel';
 import QuizOver from '../QuizOver';
-import { QuizMarvel } from '../quizMarvel';
-import { ToastContainer, toast, Zoom, Flip, Bounce } from 'react-toastify';
+
 import 'react-toastify/dist/ReactToastify.css';
-import { FaChevronRight } from "react-icons/fa6";
 
 
 class Quiz extends Component {
@@ -112,7 +114,6 @@ class Quiz extends Component {
       this.setState({
         quizEnd: true,
       })
-      //end
     } else {
       this.setState(prevState => ({
         idQuestion: prevState.idQuestion + 1

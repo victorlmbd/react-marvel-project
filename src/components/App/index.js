@@ -1,14 +1,16 @@
-import '../../App.css';
-import Header from '../Header'
-import Landing from '../Landing'
-import Footer from '../Footer'
-import Welcome from '../Welcome';
-import Login from '../Login';
-import Signup from '../Signup';
-import ErrorPage from '../ErrorPage';
-import ForgetPassword from '../ForgetPassword';
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import { IconContext } from 'react-icons';
+
+import ErrorPage from '../ErrorPage';
+import Footer from '../Footer'
+import ForgetPassword from '../ForgetPassword';
+import Header from '../Header'
+import Landing from '../Landing'
+import Login from '../Login';
+import Signup from '../Signup';
+import Welcome from '../Welcome';
+
+import '../../App.css';
 
 
 function App() {
