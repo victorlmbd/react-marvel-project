@@ -2,6 +2,7 @@ import React, { forwardRef, useState, useEffect } from 'react'
 import { GiTrophyCup } from "react-icons/gi";
 
 import Loader from '../Loader';
+import Modal from '../Modal';
 
 
 const QuizOver = forwardRef((props, ref) => {
@@ -14,12 +15,29 @@ const QuizOver = forwardRef((props, ref) => {
     loadLevelQuestions
   } = props;
 
+  const API_PUBLIC_KEY = process.env.REACT_APP_MARVEL_API_KEY;
+
+  console.log(API_PUBLIC_KEY);
+
+  const hash = 'effa9c012a5c03bc5c1982044719b6b5';
+
   const [askedQuestion, setAskedQuestion] = useState([]);
+
+  const [openModal, setOpenModal] = useState(false);
+
 
   useEffect(() => {
     setAskedQuestion(ref.current)
       // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const showModal = (id) => {
+    setOpenModal(true);
+  }
+
+  const hideModal = () => {
+    setOpenModal(false);
+  }
 
 
   const averageGrade = maxQuestions / 2;
@@ -85,7 +103,12 @@ const QuizOver = forwardRef((props, ref) => {
           <td>{question.question}</td>
           <td>{question.answer}</td>
           <td>
-            <button className='btnInfo'>Infos</button>
+            <button
+              className='btnInfo'
+              onClick={() => showModal(question.heroId)}
+            >
+              Infos
+            </button>
           </td>
         </tr>
       );
@@ -123,6 +146,17 @@ const QuizOver = forwardRef((props, ref) => {
           </tbody>
         </table>
       </div>
+      <Modal showModal={openModal} hideModal={hideModal}>
+        <div className='modalHeader'>
+          <h2>Titre</h2>
+        </div>
+        <div className='modalBody'>
+          <h3>Titre 2</h3>
+        </div>
+        <div className='modalFooter'>
+          <button className='modalBtn'>Fermer</button>
+        </div>
+      </Modal>
     </>
   );
 });
