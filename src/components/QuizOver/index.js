@@ -77,7 +77,7 @@ const QuizOver = forwardRef((props, ref) => {
 
 
   if (score < averageGrade) {
-    setTimeout(() => loadLevelQuestions(0), 5000);
+    setTimeout(() => loadLevelQuestions(quizLevel), 5000);
   }
 
 
@@ -118,7 +118,8 @@ const QuizOver = forwardRef((props, ref) => {
   ) : (
     <>
       <div className='stepsBtnContainer'>
-          <p className='failureMsg'>Vous avez échoué !</p>
+          <p className='failureMsg'>Vous avez échoué cette fois, mais ne vous découragez pas, vous pouvez y arriver !
+          </p>
       </div>
 
       <div className='percentage'>

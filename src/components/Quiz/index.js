@@ -70,7 +70,10 @@ class Quiz extends Component {
       this.gameOver(gradePercent);
     }
 
-    if (this.props.userData.pseudo !== prevProps.userData.pseudo) {
+    if (prevProps.userData.pseudo && !this.props.userData.pseudo) {
+      this.setState({ showWelcomeMsg: false });
+    }
+    else if (this.props.userData.pseudo !== prevProps.userData.pseudo && this.props.userData.pseudo) {
       this.showToastMsg(this.props.userData.pseudo);
     }
   }
@@ -88,20 +91,20 @@ class Quiz extends Component {
   }
 
   showToastMsg = pseudo => {
-    if (!this.state.showWelcomeMsg) {
-
+    if (!this.state.showWelcomeMsg && pseudo !== '') {
       this.setState({ showWelcomeMsg: true });
 
       toast(`Bienvenue ${pseudo} et bonne chance !`, {
-        bodyClassName: "toastify-bg-color",  //To style
+        bodyClassName: "toastify-bg-color",
         position: "top-right",
         autoClose: 5000,
-        hideProgressBar: false,
+        hideProgressBar: true,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: false,
         progress: undefined,
-        theme: "light",
+        theme: "dark",
+        style: { backgroundColor: '#edb90c' },
         transition: Zoom
       });
     }
@@ -117,20 +120,16 @@ class Quiz extends Component {
 
 
   nextQuestion = () => {
-    if (this.state.idQuestion === this.state.maxQuestions - 1) {
-      this.setState({ quizEnd: true });
-    } else {
-      this.setState(prevState => ({ idQuestion: prevState.idQuestion + 1 }));
-    }
-
     const goodAnswer = this.storedDataRef.current[this.state.idQuestion].answer;
+    const isLastQuestion = this.state.idQuestion === this.state.maxQuestions - 1;
+
     if (this.state.userAnswer === goodAnswer) {
       this.setState((prevState) => ({ score: prevState.score + 1 }));
 
       toast.success('Bravo +1', {
         position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
+        autoClose: 2000,
+        hideProgressBar: true,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: false,
@@ -141,8 +140,8 @@ class Quiz extends Component {
     } else {
       toast.error('Raté', {
         position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
+        autoClose: 2000,
+        hideProgressBar: true,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: false,
@@ -150,6 +149,14 @@ class Quiz extends Component {
         theme: "colored",
         transition: Bounce,
       });
+    }
+
+    if (isLastQuestion) {
+      setTimeout(() => {
+        this.setState({ quizEnd: true });
+      }, 1500);
+    } else {
+      this.setState(prevState => ({ idQuestion: prevState.idQuestion + 1 }));
     }
   }
 
@@ -172,7 +179,8 @@ class Quiz extends Component {
   loadLevelQuestions = (param) => {
     this.setState({
       ...initialState,
-      quizLevel: param
+      quizLevel: param,
+      showWelcomeMsg: false
     });
     this.loadQuestions(levelNames[param]);
   }

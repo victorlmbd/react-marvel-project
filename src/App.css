@@ -136,7 +136,6 @@ main {
   color: var(--red-color);
   background-color: var(--white-color);
 }
-/* END WELCOME PAGE */
 
 /* TOASTIFY COLOR */
 .toastify-color-welcome {
@@ -146,7 +145,6 @@ main {
   color: var(--white-color);
 }
 
-/* END TOASTIFY COLOR */
 
 /* FOOTER */
 footer {
