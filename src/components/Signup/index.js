@@ -3,7 +3,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth"
 import { setDoc } from "firebase/firestore";
 import { Link, useNavigate } from "react-router-dom";
 
-import { auth, user } from "../Firebase/firebaseConfig"
+import { auth, users } from "../Firebase/firebaseConfig"
 
 const Signup = () => {
 
@@ -36,7 +36,7 @@ const Signup = () => {
     const {email, password} = loginData;
     createUserWithEmailAndPassword(auth, email, password)
     .then ((authUser) => {
-      return setDoc(user(authUser.user.uid), {
+      return setDoc(users(authUser.user.uid), {
         pseudo,
         email
       })

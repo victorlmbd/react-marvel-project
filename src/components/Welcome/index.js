@@ -3,7 +3,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { getDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 
-import { auth, user } from "../Firebase/firebaseConfig";
+import { auth, users } from "../Firebase/firebaseConfig";
 import Loader from "../Loader";
 import Logout from "../Logout";
 import Quiz from "../Quiz";
@@ -17,35 +17,46 @@ const Welcome = () => {
   const [userData, setUserData] = useState({});
 
   useEffect(() => {
-    const listener = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUserSession(user);
-      } else if (!isLoggingOut) {
-        navigate('/');
-      }
-      setIsLoading(false);
-    });
+    let listener = null;
 
-    if (userSession) {
-      const colRef = user(userSession.uid);
+    if (!isLoggingOut) {
+      listener = onAuthStateChanged(auth, (user) => {
+        if (user) {
+          setUserSession(user);
+        } else {
+          navigate('/');
+        }
+        setIsLoading(false);
+      });
+    }
+
+    return () => {
+      if (listener) listener();
+    };
+  }, [navigate, isLoggingOut]);
+
+  useEffect(() => {
+    if (userSession && !isLoggingOut) {
+      const colRef = users(userSession.uid);
       getDoc(colRef)
         .then((snapshot) => {
           if (snapshot.exists()) {
-            const docData = snapshot.data();
-            setUserData(docData);
+            setUserData(snapshot.data());
           }
         })
         .catch((error) => {
           console.error("Erreur lors de la récupération des données:", error);
         });
     }
-
-    return () => listener();
-  }, [navigate, isLoggingOut, userSession]);
+  }, [userSession, isLoggingOut]);
 
   const handleLogout = () => {
     setIsLoggingOut(true);
-    setIsLoading(true);
+    setUserSession(null);
+    setUserData({});
+    setTimeout(() => {
+      navigate('/');
+    }, 1500);
   };
 
   if (isLoading) {
