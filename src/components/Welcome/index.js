@@ -3,7 +3,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { getDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 
-import { auth, user } from "../Firebase/firebaseConfig";
+import { auth, users } from "../Firebase/firebaseConfig";
 import Loader from "../Loader";
 import Logout from "../Logout";
 import Quiz from "../Quiz";
@@ -27,7 +27,7 @@ const Welcome = () => {
     });
 
     if (userSession) {
-      const colRef = user(userSession.uid);
+      const colRef = users(userSession.uid);
       getDoc(colRef)
         .then((snapshot) => {
           if (snapshot.exists()) {
